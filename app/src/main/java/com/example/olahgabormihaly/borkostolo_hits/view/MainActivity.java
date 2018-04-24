@@ -2,38 +2,39 @@ package com.example.olahgabormihaly.borkostolo_hits.view;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olahgabormihaly.borkostolo_hits.R;
+import com.example.olahgabormihaly.borkostolo_hits.adapter.BorkostoloSzemelyAdapter;
 import com.example.olahgabormihaly.borkostolo_hits.database.DatabaseHelper;
-import com.example.olahgabormihaly.borkostolo_hits.database.model.Note;
-import com.example.olahgabormihaly.borkostolo_hits.utils.MyDividerItemDecoration;
-import com.example.olahgabormihaly.borkostolo_hits.utils.RecyclerTouchListener;
+import com.example.olahgabormihaly.borkostolo_hits.database.model.BorkostoloSzemely;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private NotesAdapter mAdapter;
-    private List<Note> notesList = new ArrayList<>();
+    private BorkostoloSzemelyAdapter mAdapter;
+    private List<BorkostoloSzemely> notesList = new ArrayList<>();
     private CoordinatorLayout coordinatorLayout;
     private RecyclerView recyclerView;
     private TextView noNotesView;
 
     private DatabaseHelper db;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +43,32 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        coordinatorLayout = findViewById(R.id.coordinator_layout);
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.borok) {
+                    BorokFragment borokFragment = new BorokFragment();
+                    fragmentManager.beginTransaction().replace(R.id.containerLayout, borokFragment).commit();
+                } else if (item.getItemId() == R.id.kostolok) {
+                    KostolokFragment kostolokFragment = new KostolokFragment();
+                    fragmentManager.beginTransaction().replace(R.id.containerLayout, kostolokFragment).commit();
+                }
+                return true;
+            }
+        });
+
+        bottomNavigationView.setSelectedItemId(R.id.borok);
+
+        /*coordinatorLayout = findViewById(R.id.coordinator_layout);
         recyclerView = findViewById(R.id.recycler_view);
         noNotesView = findViewById(R.id.empty_notes_view);
 
         db = new DatabaseHelper(this);
 
-        notesList.addAll(db.getAllNotes());
+        notesList.addAll(db.getAllKostolo());
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mAdapter = new NotesAdapter(this, notesList);
+        mAdapter = new BorkostoloSzemelyAdapter(this, notesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -67,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
 
         toggleEmptyNotes();
 
-        /**
+        *//**
          * On long press on RecyclerView item, open alert dialog
          * with options to choose
          * Edit and Delete
-         * */
+         * *//*
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
                 recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -82,20 +102,20 @@ public class MainActivity extends AppCompatActivity {
             public void onLongClick(View view, int position) {
                 showActionsDialog(position);
             }
-        }));
+        }));*/
     }
 
     /**
      * Inserting new note in db
      * and refreshing the list
      */
-    private void createNote(String note) {
+    private void createNote(String szemSzam, String vNev, String kNev, String szulDatum, long timeStamp) {
         // inserting note in db and getting
         // newly inserted note id
-        long id = db.insertNote(note);
+        long id = db.insertKostolo(szemSzam, vNev, kNev, szulDatum, timeStamp);
 
         // get the newly inserted note from db
-        Note n = db.getNote(id);
+        BorkostoloSzemely n = db.getKostolo(id);
 
         if (n != null) {
             // adding new note to array list at 0 position
@@ -112,13 +132,16 @@ public class MainActivity extends AppCompatActivity {
      * Updating note in db and updating
      * item in the list by its position
      */
-    private void updateNote(String note, int position) {
-        Note n = notesList.get(position);
+    private void updateNote(String szemSzam, String vNev, String kNev, String szulDatum, int position) {
+        BorkostoloSzemely n = notesList.get(position);
         // updating note text
-        n.setNote(note);
+        n.setSzemIgSzam(szemSzam);
+        n.setVezetekNev(vNev);
+        n.setKeresztNev(kNev);
+        n.setSzuletesiDatum(szulDatum);
 
         // updating note in db
-        db.updateNote(n);
+        db.updateKostolo(n);
 
         // refreshing the list
         notesList.set(position, n);
@@ -133,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void deleteNote(int position) {
         // deleting the note from db
-        db.deleteNote(notesList.get(position));
+        db.deleteKostolo(notesList.get(position));
 
         // removing the note from the list
         notesList.remove(position);
@@ -167,23 +190,29 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Shows alert dialog with EditText options to enter / edit
-     * a note.
-     * when shouldUpdate=true, it automatically displays old note and changes the
+     * a borkostoloSzemely.
+     * when shouldUpdate=true, it automatically displays old borkostoloSzemely and changes the
      * button text to UPDATE
      */
-    private void showNoteDialog(final boolean shouldUpdate, final Note note, final int position) {
+    private void showNoteDialog(final boolean shouldUpdate, final BorkostoloSzemely borkostoloSzemely, final int position) {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
-        View view = layoutInflaterAndroid.inflate(R.layout.note_dialog, null);
+        View view = layoutInflaterAndroid.inflate(R.layout.dialog_add_kostolo, null);
 
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(MainActivity.this);
         alertDialogBuilderUserInput.setView(view);
 
-        final EditText inputNote = view.findViewById(R.id.note);
+        final EditText inputSzemIgSzam = view.findViewById(R.id.dialog_SzemIgSzam);
+        final EditText inputVNev = view.findViewById(R.id.dialog_VNev);
+        final EditText inputKNev = view.findViewById(R.id.dialog_KNev);
+        final EditText inputSzulDatum = view.findViewById(R.id.dialog_SzulDatum);
         TextView dialogTitle = view.findViewById(R.id.dialog_title);
         dialogTitle.setText(!shouldUpdate ? getString(R.string.lbl_new_note_title) : getString(R.string.lbl_edit_note_title));
 
-        if (shouldUpdate && note != null) {
-            inputNote.setText(note.getNote());
+        if (shouldUpdate && borkostoloSzemely != null) {
+            inputSzemIgSzam.setText(borkostoloSzemely.getSzemIgSzam());
+            inputVNev.setText(borkostoloSzemely.getVezetekNev());
+            inputKNev.setText(borkostoloSzemely.getKeresztNev());
+            inputSzulDatum.setText(borkostoloSzemely.getSzuletesiDatum());
         }
         alertDialogBuilderUserInput
                 .setCancelable(false)
@@ -206,20 +235,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Show toast message when no text is entered
-                if (TextUtils.isEmpty(inputNote.getText().toString())) {
-                    Toast.makeText(MainActivity.this, "Enter note!", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(inputSzemIgSzam.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Enter ID Card number!", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (TextUtils.isEmpty(inputKNev.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Enter First Name!", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (TextUtils.isEmpty(inputVNev.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Enter Last Name!", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (TextUtils.isEmpty(inputSzulDatum.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Enter Birthday!", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     alertDialog.dismiss();
                 }
 
-                // check if user updating note
-                if (shouldUpdate && note != null) {
-                    // update note by it's id
-                    updateNote(inputNote.getText().toString(), position);
+                // check if user updating borkostoloSzemely
+                if (shouldUpdate && borkostoloSzemely != null) {
+                    // update borkostoloSzemely by it's id
+                    updateNote(inputSzemIgSzam.getText().toString(), inputVNev.getText().toString(), inputKNev.getText().toString(), inputSzulDatum.getText().toString(), position);
                 } else {
-                    // create new note
-                    createNote(inputNote.getText().toString());
+                    // create new borkostoloSzemely
+                    createNote(inputSzemIgSzam.getText().toString(), inputVNev.getText().toString(), inputKNev.getText().toString(), inputSzulDatum.getText().toString(), System.currentTimeMillis());
                 }
             }
         });
@@ -231,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     private void toggleEmptyNotes() {
         // you can check notesList.size() > 0
 
-        if (db.getNotesCount() > 0) {
+        if (db.getKostoloCount() > 0) {
             noNotesView.setVisibility(View.GONE);
         } else {
             noNotesView.setVisibility(View.VISIBLE);

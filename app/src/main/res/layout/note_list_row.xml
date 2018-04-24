@@ -20,20 +20,55 @@
         android:lineSpacingExtra="0dp"
         android:textSize="@dimen/dot_text_size" />
 
+
     <TextView
-        android:id="@+id/timestamp"
-        android:layout_width="match_parent"
+        android:id="@+id/szakmaisagErteke"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/dot"
+        android:textColor="@color/black"
+        android:textSize="@dimen/szakmaisagErteke"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/szakmaisagErteke"
         android:textColor="@color/timestamp"
         android:textSize="@dimen/timestamp" />
 
     <TextView
-        android:id="@+id/note"
-        android:layout_width="match_parent"
+        android:id="@+id/szulDatum"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timestamp"
+        android:layout_toRightOf="@id/timestamp"
+        android:textColor="@color/timestamp"
+        android:textSize="@dimen/timestamp" />
+
+    <TextView
+        android:id="@+id/szemIgSzam"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/szulDatum"
+        android:textColor="@color/note_list_text"
+        android:textSize="@dimen/note_list_text" />
+
+    <TextView
+        android:id="@+id/VNev"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/szulDatum"
         android:layout_toRightOf="@id/dot"
+        android:textColor="@color/note_list_text"
+        android:textSize="@dimen/note_list_text" />
+
+    <TextView
+        android:id="@+id/KNev"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/szulDatum"
+        android:layout_toRightOf="@id/VNev"
         android:textColor="@color/note_list_text"
         android:textSize="@dimen/note_list_text" />
 
