@@ -10,20 +10,47 @@
     android:paddingTop="@dimen/dimen_10">
 
     <TextView
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="Bíráló személy:"
+        android:layout_below="@+id/BorBiraltBorID"
+        android:layout_toRightOf="@id/BorBiralatBiraloID"/>
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="Bírált bor:"
+        android:layout_below="@+id/BorBiralatBiraloID"/>
+    <TextView
         android:id="@+id/BorBiralatBiraloID"
-        android:layout_width="30dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dot_margin_right"
         android:includeFontPadding="false"
         android:textColor="@color/black"
         android:textSize="@dimen/szakmaisagErteke"
         android:textStyle="bold" />
+    <TextView
+        android:id="@+id/BorBiraltBorID"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/BorBiralatBiraloID"
+        android:includeFontPadding="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/szakmaisagErteke"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/BorBiralatBorID"
-        android:layout_width="30dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dot_margin_right"
+        android:text="Bírált minta száma:"
+        android:layout_below="@+id/megjelenesTisztasaga"
+        android:layout_toRightOf="@id/BorBiraltBorID"/>
+    <TextView
+        android:id="@+id/megjelenesTisztasaga"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/BorBiraltBorID"
         android:includeFontPadding="false"
         android:textColor="@color/black"
         android:textSize="@dimen/szakmaisagErteke"

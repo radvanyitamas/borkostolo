@@ -26,11 +26,13 @@ public class BorBiralatAdapter extends RecyclerView.Adapter<BorBiralatAdapter.My
 
         public TextView tvBiraloID;
         public TextView tvBiraltBorID;
+        public TextView tvMegjelenesTisztasaga;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tvBiraloID = itemView.findViewById(R.id.BorBiralatBiraloID);
             tvBiraltBorID = itemView.findViewById(R.id.BorBiralatBiraloID);
+            tvMegjelenesTisztasaga = itemView.findViewById(R.id.megjelenesTisztasaga);
         }
     }
 
@@ -46,6 +48,7 @@ public class BorBiralatAdapter extends RecyclerView.Adapter<BorBiralatAdapter.My
 
         holder.tvBiraloID.setText(String.valueOf(borbiralat.getBiraloSzemelyID()));
         holder.tvBiraltBorID.setText(String.valueOf(borbiralat.getBiraltBorID()));
+        holder.tvMegjelenesTisztasaga.setText(String.valueOf(borbiralat.getMegjelenesTisztasag()));
 
     }
 

@@ -1,5 +1,6 @@
 package com.example.olahgabormihaly.borkostolo_hits.view;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olahgabormihaly.borkostolo_hits.R;
@@ -28,15 +31,30 @@ public class BorbiralatFragment extends Fragment {
 
     private RecyclerView recyclerViewBorBiralat;
     private FloatingActionButton floatingActionButton;
+    private TextView tvNoBiralat;
 
     private BorBiralatAdapter borBiralatAdapter;
     private List<Borbiralat> borBiralatList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
 
+    public void refreshList() {
+        borBiralatList.clear();
+        borBiralatList.addAll(databaseHelper.getAllBorBiralat());
+
+//        if(borBiralatList.isEmpty()) {
+//            tvNoBiralat.setVisibility(View.VISIBLE);
+//        } else {
+//            tvNoBiralat.setVisibility(View.GONE);
+//        }
+
+        borBiralatAdapter.notifyDataSetChanged();
+    }
+
     private void showAddBorBiralatDialog(final boolean shouldUpdate, final int position) {
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_biralat, null);
         final EditText inputBiraltBorID = view.findViewById(R.id.dialog_biraltBorID);
         final EditText inputBiraloID = view.findViewById(R.id.dialog_biraloID);
+        final Spinner spMegjelenesTisztasag = view.findViewById(R.id.dialog_spMegjelenesTisztasag);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                 .setTitle("Bírálat hozzáadása")
                 .setView(view)
@@ -56,12 +74,16 @@ public class BorbiralatFragment extends Fragment {
                         // check if user updating borkostoloSzemely
                         if (shouldUpdate && borBiralatList.get(position) != null) {
                             // update borkostoloSzemely by it's id
-                            updateBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), Integer.parseInt(inputBiraloID.getText().toString()), position);
+                            int borBiraloID = Integer.parseInt(String.valueOf(inputBiraloID.getText().toString()));
+                            updateBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), borBiraloID, Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())), position);
                         } else {
                             // create new borkostoloSzemely
-                            createBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), Integer.parseInt(inputBiraloID.getText().toString()));
-                        }
-                        refreshList();
+                            int borBiraloID = Integer.parseInt(String.valueOf(inputBiraloID.getText().toString()));
+                            createBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), borBiraloID, Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())));
+                            Toast.makeText(getContext(), String.valueOf(borBiraloID), Toast.LENGTH_SHORT).show();
+
+                    }
+                    refreshList();
                         dialog.dismiss();
                     }
                 });
@@ -91,21 +113,24 @@ public class BorbiralatFragment extends Fragment {
      * and refreshing the list
      */
 
-    private void createBorBiralat(int biraltBorId, int biraloId) {
+    private void createBorBiralat(int biraltBorId, int biraloSzemelyId, int megjelenesTisztasag) {
         // inserting note in db and getting
         // newly inserted note id
-        databaseHelper.insertBorBiralat(biraltBorId, biraloId);
+        String borBiraloID = String.valueOf(Integer.parseInt(String.valueOf(biraloSzemelyId)));
+        Toast.makeText(getContext(), borBiraloID, Toast.LENGTH_SHORT).show();
+        databaseHelper.insertBorBiralat(biraltBorId, biraloSzemelyId, megjelenesTisztasag);
     }
 
     /**
      * Updating note in db and updating
      * item in the list by its position
      */
-    private void updateBorBiralat(int biraltBorId, int biraloId, int position) {
+    private void updateBorBiralat(int biraltBorId, int biraloSzemelyId, int megjelenesTisztasaga, int position) {
         Borbiralat t = borBiralatList.get(position);
         // updating note text
         t.setBiraltBorID(biraltBorId);
-        t.setBiraloSzemelyID(biraloId);
+        t.setBiraloSzemelyID(biraloSzemelyId);
+        t.setMegjelenesTisztasag(megjelenesTisztasaga);
         // updating note in db
         databaseHelper.updateBorBiralat(t);
     }
@@ -136,6 +161,13 @@ public class BorbiralatFragment extends Fragment {
 
         recyclerViewBorBiralat = root.findViewById(R.id.recyclerViewBorok);
         floatingActionButton = root.findViewById(R.id.floatingActionButton);
+        tvNoBiralat = root.findViewById(R.id.tvNoBiralat);
+
+//        if(borBiralatList.size() == 0) {
+//            tvNoBiralat.setVisibility(View.VISIBLE);
+//        } else {
+//            tvNoBiralat.setVisibility(View.GONE);
+//        }
 
         return root;
     }
@@ -165,13 +197,6 @@ public class BorbiralatFragment extends Fragment {
                 showActionsDialog(position);
             }
         }));
-    }
-
-    public void refreshList() {
-        borBiralatList.clear();
-        borBiralatList.addAll(databaseHelper.getAllBorBiralat());
-
-        borBiralatAdapter.notifyDataSetChanged();
     }
 
     @Override

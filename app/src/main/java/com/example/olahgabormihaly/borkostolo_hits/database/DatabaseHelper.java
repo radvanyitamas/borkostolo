@@ -140,6 +140,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return borkostoloSzemely;
     }
 
+    public int updateKostolo(BorkostoloSzemely borkostoloSzemely) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(BorkostoloSzemely.COLUMN_SZAKMAISAG, borkostoloSzemely.getSzakmaisagiErtek());
+        values.put(BorkostoloSzemely.COLUMN_SZULDATUM, borkostoloSzemely.getSzuletesiDatum());
+        values.put(BorkostoloSzemely.COLUMN_KNEV, borkostoloSzemely.getKeresztNev());
+        values.put(BorkostoloSzemely.COLUMN_VNEV, borkostoloSzemely.getVezetekNev());
+        values.put(BorkostoloSzemely.COLUMN_ID, borkostoloSzemely.getId());
+
+        // Updating row
+        return  db.update(BorkostoloSzemely.TABLE_NAME, values, BorkostoloSzemely.COLUMN_ID + " =?",
+                new  String[]{String.valueOf(borkostoloSzemely.getId())});
+    }
+
     public int getKostoloCount() {
         String countQuery = "SELECT * FROM " + BorkostoloSzemely.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -151,7 +166,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Return count
         return count;
     }
-
 
     public List<Borbiralat> getAllBorBiralat() {
         List<Borbiralat> borbiralatList = new ArrayList<>();
@@ -169,6 +183,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 borbiralatok.setId((cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_ID))));
                 borbiralatok.setBiraltBorID(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_BiraltBorID)));
                 borbiralatok.setBiraloSzemelyID(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_BiraloSzemelyID)));
+                borbiralatok.setMegjelenesTisztasag(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_MegjelenesTisztasag)));
 
                 borbiralatList.add(borbiralatok);
             } while(cursor.moveToNext());
@@ -182,16 +197,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return borbiralatList;
     }
 
-    public long insertBorBiralat(int biraltBorId, int biraloSzemelyID) {
+    public long insertBorBiralat(int biraltBorId, int biraloSzemelyID, int megjelenesTisztasag) {
         // Get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        // 'id' and 'timestamp' will be inserted automatically
         // no need to add them
 
         values.put(Borbiralat.COLUMN_BiraltBorID, biraltBorId);
         values.put(Borbiralat.COLUMN_BiraloSzemelyID, biraloSzemelyID);
+        values.put(Borbiralat.COLUMN_MegjelenesTisztasag, megjelenesTisztasag);
 
         // Insert row
         long id = db.insert(Borbiralat.TABLE_NAME, null, values);
@@ -209,25 +224,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Borbiralat.COLUMN_BiraltBorID, borbiralat.getBiraltBorID());
         values.put(Borbiralat.COLUMN_BiraloSzemelyID, borbiralat.getBiraloSzemelyID());
+        values.put(Borbiralat.COLUMN_MegjelenesTisztasag, borbiralat.getMegjelenesTisztasag());
 
         // Updating row
         return  db.update(Borbiralat.TABLE_NAME, values, Borbiralat.COLUMN_ID + " =?",
                 new  String[]{String.valueOf(borbiralat.getId())});
     }
 
-    public int updateKostolo(BorkostoloSzemely borkostoloSzemely) {
+    public void deleteBorBiralat(Borbiralat borbiralat) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(BorkostoloSzemely.COLUMN_SZAKMAISAG, borkostoloSzemely.getSzakmaisagiErtek());
-        values.put(BorkostoloSzemely.COLUMN_SZULDATUM, borkostoloSzemely.getSzuletesiDatum());
-        values.put(BorkostoloSzemely.COLUMN_KNEV, borkostoloSzemely.getKeresztNev());
-        values.put(BorkostoloSzemely.COLUMN_VNEV, borkostoloSzemely.getVezetekNev());
-        values.put(BorkostoloSzemely.COLUMN_ID, borkostoloSzemely.getId());
-
-        // Updating row
-        return  db.update(BorkostoloSzemely.TABLE_NAME, values, BorkostoloSzemely.COLUMN_ID + " =?",
-                new  String[]{String.valueOf(borkostoloSzemely.getId())});
+        db.delete(Borbiralat.TABLE_NAME, Borbiralat.COLUMN_ID + " =?",
+                new String[]{String.valueOf(borbiralat.getId())});
+        db.close();
     }
 
     public int updateBor(Bor borok) {
@@ -261,15 +269,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(bor.getId())});
         db.close();
     }
-
-    public void deleteBorBiralat(Borbiralat borbiralat) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Bor.TABLE_NAME, Borbiralat.COLUMN_ID + " =?",
-                new String[]{String.valueOf(borbiralat.getId())});
-        db.close();
-    }
-
-
 
     public long insertBor(String borGyarto, String borNeve, String borFajta, String borSzine, int borEvjarat, float borAlkholoTartam, int borFogyasztasiHom, float v) {
         // Get writable database as we want to write data

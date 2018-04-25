@@ -22,4 +22,86 @@
     <string name="hint_enter_temperature">The consumption temperature of the wine!</string>
     <string name="hint_enter_text">Here\'s where text is!</string>
     <string name="ures_biralati_lista">Nincsenek hozzáadva még bírálatok</string>
+
+
+    <string name="promt">Válasz egy értéket</string>
+    <string-array name="megjelenesTisztasag">
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="megjelenesSzin">
+        <item>10</item>
+        <item>8</item>
+        <item>6</item>
+        <item>4</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="illatIntenzitas">
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>4</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="illatKarakter">
+        <item>6</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="illatMinoseg">
+        <item>16</item>
+        <item>14</item>
+        <item>12</item>
+        <item>10</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="zamatIntenzitas">
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>4</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="zamatKarakter">
+        <item>6</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="zamazMinoseg">
+        <item>22</item>
+        <item>19</item>
+        <item>16</item>
+        <item>13</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="zamatHosszusag">
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="osszbenyomas">
+        <item>11</item>
+        <item>10</item>
+        <item>9</item>
+        <item>8</item>
+        <item>7</item>
+    </string-array>
 </resources>

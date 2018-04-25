@@ -13,7 +13,7 @@
         android:layout_marginBottom="@dimen/dimen_10"
         android:fontFamily="sans-serif-medium"
         android:lineSpacingExtra="8sp"
-        android:text="@string/lbl_new_note_title"
+        android:text="Borbírálati lap"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/lbl_new_note_title"
         android:textStyle="normal" />
@@ -24,9 +24,9 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:gravity="top"
-        android:hint="@string/hint_enter_idCard"
+        android:hint="Bírált bor száma"
         android:inputType="textCapSentences|textMultiLine"
-        android:lines="4"
+        android:lines="2"
         android:textColorHint="@color/hint_enter_note"
         android:textSize="@dimen/input_new_note" />
 
@@ -36,10 +36,19 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:gravity="top"
-        android:hint="@string/hint_enter_idCard"
+        android:hint="Bíráló személy száma"
         android:inputType="textCapSentences|textMultiLine"
-        android:lines="4"
+        android:lines="2"
+        android:visibility="visible"
         android:textColorHint="@color/hint_enter_note"
         android:textSize="@dimen/input_new_note" />
+
+    <Spinner
+        android:id="@+id/dialog_spMegjelenesTisztasag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/megjelenesTisztasag"
+        android:prompt="@string/promt"
+        />
 
 </LinearLayout>
