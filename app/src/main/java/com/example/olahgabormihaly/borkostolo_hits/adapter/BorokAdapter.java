@@ -27,6 +27,7 @@ public class BorokAdapter extends RecyclerView.Adapter<BorokAdapter.MyViewHolder
         public TextView tvEvjarat;
         public TextView tvAlkohol;
         public TextView tvFogyasztasiHomerseklet;
+        public TextView tvAtlagPontszam;
 
 
         public MyViewHolder(View itemView) {
@@ -38,6 +39,7 @@ public class BorokAdapter extends RecyclerView.Adapter<BorokAdapter.MyViewHolder
             tvEvjarat = itemView.findViewById(R.id.BorEvjarat);
             tvAlkohol = itemView.findViewById(R.id.BorAlkoholTartam);
             tvFogyasztasiHomerseklet = itemView.findViewById(R.id.BorFogyasztasiHomerseklet);
+            tvAtlagPontszam = itemView.findViewById(R.id.BorAtlagPontszam);
         }
     }
 
@@ -57,7 +59,15 @@ public class BorokAdapter extends RecyclerView.Adapter<BorokAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Bor bor = borList.get(position);
 
+        holder.tvGyarto.setText(bor.getBorGyarto());
         holder.tvNeve.setText(bor.getBorNeve());
+        holder.tvFajta.setText(bor.getBorFajta());
+        holder.tvSzin.setText(bor.getBorSzin());
+        holder.tvEvjarat.setText(String.valueOf(bor.getBorEvjarat()));
+        holder.tvAlkohol.setText("Alc. " +String.valueOf(bor.getBorAlkohol_tartam())  + "% Vol");
+        holder.tvFogyasztasiHomerseklet.setText(String.valueOf(bor.getBorFogyasztasiHomerseklet()) + " C°");
+        holder.tvAtlagPontszam.setText(String.valueOf(bor.getBorAtlagPontszam()));
+
     }
 
     @Override

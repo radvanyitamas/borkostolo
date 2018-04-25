@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.kostolok) {
                     KostolokFragment kostolokFragment = new KostolokFragment();
                     fragmentManager.beginTransaction().replace(R.id.containerLayout, kostolokFragment).commit();
+                } else if (item.getItemId() == R.id.biralat) {
+                    BorbiralatFragment biraltFragment = new BorbiralatFragment();
+                    fragmentManager.beginTransaction().replace(R.id.containerLayout, biraltFragment).commit();
                 }
                 return true;
             }

@@ -61,7 +61,7 @@ public class KostolokFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showKostoloDialog(false, -1);
+                showAddKostoloDialog(false, -1);
             }
         });
 
@@ -101,7 +101,7 @@ public class KostolokFragment extends Fragment {
         borkostoloSzemelyAdapter.notifyDataSetChanged();
     }
 
-    private void showKostoloDialog(final boolean shouldUpdate, final int position) {
+    private void showAddKostoloDialog(final boolean shouldUpdate, final int position) {
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_kostolo, null);
         final EditText inputSzemIgSzam = view.findViewById(R.id.dialog_SzemIgSzam);
         final EditText inputVNev = view.findViewById(R.id.dialog_VNev);
@@ -158,7 +158,7 @@ public class KostolokFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                    showKostoloDialog(true, position);
+                    showAddKostoloDialog(true, position);
                 } else {
                     deleteNote(position);
                 }

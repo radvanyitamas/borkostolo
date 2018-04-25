@@ -4,13 +4,120 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:text="Gyártó"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/dialog_etBorGyarto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/hint_enter_text"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lines="2"
+        android:textColorHint="@color/hint_enter_note"
+        android:textSize="@dimen/input_new_note" />
+
+    <TextView
         android:text="@string/nev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
     <EditText
-        android:id="@+id/etNev"
+        android:id="@+id/dialog_etBorNev"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/hint_enter_text"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lines="2"
+        android:textColorHint="@color/hint_enter_note"
+        android:textSize="@dimen/input_new_note"  />
+
+
+    <TextView
+        android:text="@string/hint_enter_type"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/dialog_etBorFajta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/hint_enter_text"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lines="2"
+        android:textColorHint="@color/hint_enter_note"
+        android:textSize="@dimen/input_new_note" />
+
+    <TextView
+        android:text="@string/hint_enter_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/dialog_etBorSzin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/hint_enter_text"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lines="2"
+        android:textColorHint="@color/hint_enter_note"
+        android:textSize="@dimen/input_new_note" />
+
+
+    <TextView
+        android:text="@string/hint_enter_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/dialog_etBorEv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/hint_enter_text"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lines="2"
+        android:textColorHint="@color/hint_enter_note"
+        android:textSize="@dimen/input_new_note" />
+
+    <TextView
+        android:text="@string/hint_enter_alcohol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/dialog_etBorAlkoholTartam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/hint_enter_text"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lines="2"
+        android:textColorHint="@color/hint_enter_note"
+        android:textSize="@dimen/input_new_note" />
+
+
+    <TextView
+        android:text="@string/hint_enter_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/dialog_etBorFogyasztasiHomerseklet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/hint_enter_text"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lines="2"
+        android:textColorHint="@color/hint_enter_note"
+        android:textSize="@dimen/input_new_note" />
+
+
 
 </LinearLayout>

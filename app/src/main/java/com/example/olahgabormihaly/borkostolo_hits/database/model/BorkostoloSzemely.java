@@ -16,7 +16,7 @@ public class BorkostoloSzemely {
     private String VezetekNev;
     private String KeresztNev;
     private String SzuletesiDatum;
-    private int SzakmaisagiErtek;
+    private float SzakmaisagiErtek;
     private long Timestamp;
 
     // Create table SQL query
@@ -27,14 +27,14 @@ public class BorkostoloSzemely {
             + COLUMN_VNEV + " TEXT,"
             + COLUMN_KNEV + " TEXT,"
             + COLUMN_SZULDATUM + " TEXT,"
-            + COLUMN_SZAKMAISAG + " INTEGER,"
+            + COLUMN_SZAKMAISAG + " REAL,"
             + COLUMN_TIMESTAMP + " INTEGER"
             + ")";
 
     public BorkostoloSzemely() {
     }
 
-    public BorkostoloSzemely(int id, String szemIgSzam, String vezetekNev, String keresztNev, String szuletesiDatum, int szakmaisagiErtek, String timestamp) {
+    public BorkostoloSzemely(int id, String szemIgSzam, String vezetekNev, String keresztNev, String szuletesiDatum, float szakmaisagiErtek, String timestamp) {
         this.ID = id;
         this.SzemIgSzam = szemIgSzam;
         this.VezetekNev = vezetekNev;
@@ -83,11 +83,11 @@ public class BorkostoloSzemely {
         this.SzuletesiDatum = szuletesiDatum;
     }
 
-    public int getSzakmaisagiErtek() {
+    public float getSzakmaisagiErtek() {
         return SzakmaisagiErtek;
     }
 
-    public void setSzakmaisagiErtek(int szakmaisagiErtek) {
+    public void setSzakmaisagiErtek(float szakmaisagiErtek) {
         this.SzakmaisagiErtek = szakmaisagiErtek;
     }
 

@@ -14,4 +14,12 @@
     <string name="ures_bor_lista">Nincsenek hozzáadott borok!</string>
     <string name="msg_no_notes">No persons found!</string>
     <string name="ures_kostolo_lista">Nincsenek kóstolók hozzáadva!</string>
+    <string name="hint_enter_wine_name">Enter wine Name!</string>
+    <string name="hint_enter_type">Enter wine type!</string>
+    <string name="hint_enter_year">The vintage of a wine!</string>
+    <string name="hint_enter_color">The color of wine!</string>
+    <string name="hint_enter_alcohol">Alcohol content of wine!</string>
+    <string name="hint_enter_temperature">The consumption temperature of the wine!</string>
+    <string name="hint_enter_text">Here\'s where text is!</string>
+    <string name="ures_biralati_lista">Nincsenek hozzáadva még bírálatok</string>
 </resources>
