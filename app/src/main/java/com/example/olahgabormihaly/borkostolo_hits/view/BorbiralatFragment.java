@@ -34,18 +34,18 @@ public class BorbiralatFragment extends Fragment {
     private TextView tvNoBiralat;
 
     private BorBiralatAdapter borBiralatAdapter;
-    private List<Borbiralat> borBiralatList = new ArrayList<>();
+    private List<Borbiralat> borbiralatList = new ArrayList<>();
     private DatabaseHelper databaseHelper;
 
     public void refreshList() {
-        borBiralatList.clear();
-        borBiralatList.addAll(databaseHelper.getAllBorBiralat());
+        borbiralatList.clear();
+        borbiralatList.addAll(databaseHelper.getAllBorBiralat());
 
-//        if(borBiralatList.isEmpty()) {
-//            tvNoBiralat.setVisibility(View.VISIBLE);
-//        } else {
-//            tvNoBiralat.setVisibility(View.GONE);
-//        }
+        if(borbiralatList.size() == 0) {
+            tvNoBiralat.setVisibility(View.VISIBLE);
+        } else {
+            tvNoBiralat.setVisibility(View.GONE);
+        }
 
         borBiralatAdapter.notifyDataSetChanged();
     }
@@ -72,15 +72,12 @@ public class BorbiralatFragment extends Fragment {
                         }
 
                         // check if user updating borkostoloSzemely
-                        if (shouldUpdate && borBiralatList.get(position) != null) {
+                        if (shouldUpdate && borbiralatList.get(position) != null) {
                             // update borkostoloSzemely by it's id
-                            int borBiraloID = Integer.parseInt(String.valueOf(inputBiraloID.getText().toString()));
-                            updateBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), borBiraloID, Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())), position);
+                            updateBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())), Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())), position);
                         } else {
                             // create new borkostoloSzemely
-                            int borBiraloID = Integer.parseInt(String.valueOf(inputBiraloID.getText().toString()));
-                            createBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), borBiraloID, Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())));
-                            Toast.makeText(getContext(), String.valueOf(borBiraloID), Toast.LENGTH_SHORT).show();
+                            createBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())), Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())));
 
                     }
                     refreshList();
@@ -116,8 +113,6 @@ public class BorbiralatFragment extends Fragment {
     private void createBorBiralat(int biraltBorId, int biraloSzemelyId, int megjelenesTisztasag) {
         // inserting note in db and getting
         // newly inserted note id
-        String borBiraloID = String.valueOf(Integer.parseInt(String.valueOf(biraloSzemelyId)));
-        Toast.makeText(getContext(), borBiraloID, Toast.LENGTH_SHORT).show();
         databaseHelper.insertBorBiralat(biraltBorId, biraloSzemelyId, megjelenesTisztasag);
     }
 
@@ -126,7 +121,7 @@ public class BorbiralatFragment extends Fragment {
      * item in the list by its position
      */
     private void updateBorBiralat(int biraltBorId, int biraloSzemelyId, int megjelenesTisztasaga, int position) {
-        Borbiralat t = borBiralatList.get(position);
+        Borbiralat t = borbiralatList.get(position);
         // updating note text
         t.setBiraltBorID(biraltBorId);
         t.setBiraloSzemelyID(biraloSzemelyId);
@@ -141,7 +136,7 @@ public class BorbiralatFragment extends Fragment {
      */
     private void deleteBorBiralat(int position) {
         // deleting the note from db
-        databaseHelper.deleteBorBiralat(borBiralatList.get(position));
+        databaseHelper.deleteBorBiralat(borbiralatList.get(position));
 
         refreshList();
     }
@@ -157,17 +152,11 @@ public class BorbiralatFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_borok, container, false);
+        View root = inflater.inflate(R.layout.fragment_borbiralat, container, false);
 
-        recyclerViewBorBiralat = root.findViewById(R.id.recyclerViewBorok);
+        recyclerViewBorBiralat = root.findViewById(R.id.recyclerViewBorbiralat);
         floatingActionButton = root.findViewById(R.id.floatingActionButton);
         tvNoBiralat = root.findViewById(R.id.tvNoBiralat);
-
-//        if(borBiralatList.size() == 0) {
-//            tvNoBiralat.setVisibility(View.VISIBLE);
-//        } else {
-//            tvNoBiralat.setVisibility(View.GONE);
-//        }
 
         return root;
     }
@@ -183,7 +172,7 @@ public class BorbiralatFragment extends Fragment {
             }
         });
 
-        borBiralatAdapter = new BorBiralatAdapter(getContext(),borBiralatList);
+        borBiralatAdapter = new BorBiralatAdapter(getContext(),borbiralatList);
         recyclerViewBorBiralat.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewBorBiralat.setAdapter(borBiralatAdapter);
         recyclerViewBorBiralat.addOnItemTouchListener(new RecyclerTouchListener(getContext(),

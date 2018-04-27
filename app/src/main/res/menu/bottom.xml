@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/borok" android:title="Borok" android:icon="@drawable/wine_icon"/>
-    <item android:id="@+id/kostolok" android:title="Kostolók" android:icon="@drawable/people_icon"/>
-    <item android:id="@+id/biralat" android:title="Borbírálati lap" android:icon="@drawable/wine_icon" />
+    <item android:id="@+id/borok" android:title="Wine" android:icon="@drawable/wine_icon"/>
+    <item android:id="@+id/kostolok" android:title="People" android:icon="@drawable/people_icon"/>
+    <item android:id="@+id/biralat" android:title="Rating page" android:icon="@drawable/wine_icon" />
 </menu>

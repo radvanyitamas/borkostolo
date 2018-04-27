@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HITS alapú hálózati algoritmus a borkóstolók szakmai ismereteinek értékelésére</string>
+    <string name="app_name">HITS based network algorithm for evaluating the professional skills of wine tasters</string>
     <string name="action_settings">Settings</string>
     <string name="activity_title_home">Notes</string>
     <string name="lbl_new_note_title">New Person</string>
@@ -9,11 +9,11 @@
     <string name="hint_enter_firstName">Enter First Name!</string>
     <string name="hint_enter_lastName">Enter Last Name!</string>
     <string name="hint_enter_idCard">Enter ID card number!</string>
-    <string name="nev">Név</string>
+    <string name="nev">Name</string>
 
-    <string name="ures_bor_lista">Nincsenek hozzáadott borok!</string>
-    <string name="msg_no_notes">No persons found!</string>
-    <string name="ures_kostolo_lista">Nincsenek kóstolók hozzáadva!</string>
+    <string name="empty_wine_list">No wine have been added!</string>
+    <string name="msg_no_notes">No persons have been found!</string>
+    <string name="empty_people_list">No people have been added!</string>
     <string name="hint_enter_wine_name">Enter wine Name!</string>
     <string name="hint_enter_type">Enter wine type!</string>
     <string name="hint_enter_year">The vintage of a wine!</string>
@@ -21,10 +21,10 @@
     <string name="hint_enter_alcohol">Alcohol content of wine!</string>
     <string name="hint_enter_temperature">The consumption temperature of the wine!</string>
     <string name="hint_enter_text">Here\'s where text is!</string>
-    <string name="ures_biralati_lista">Nincsenek hozzáadva még bírálatok</string>
+    <string name="empty_rating_list">No reviews have been added</string>
 
 
-    <string name="promt">Válasz egy értéket</string>
+    <string name="promt">Choose a value!</string>
     <string-array name="megjelenesTisztasag">
         <item>5</item>
         <item>4</item>
