@@ -1,6 +1,5 @@
 package com.example.olahgabormihaly.borkostolo_hits.view;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,7 +40,7 @@ public class BorbiralatFragment extends Fragment {
         borbiralatList.clear();
         borbiralatList.addAll(databaseHelper.getAllBorBiralat());
 
-        if(borbiralatList.size() == 0) {
+        if (borbiralatList.size() == 0) {
             tvNoBiralat.setVisibility(View.VISIBLE);
         } else {
             tvNoBiralat.setVisibility(View.GONE);
@@ -54,7 +53,21 @@ public class BorbiralatFragment extends Fragment {
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_biralat, null);
         final EditText inputBiraltBorID = view.findViewById(R.id.dialog_biraltBorID);
         final EditText inputBiraloID = view.findViewById(R.id.dialog_biraloID);
+        //Megjelenés
         final Spinner spMegjelenesTisztasag = view.findViewById(R.id.dialog_spMegjelenesTisztasag);
+        final Spinner spMegjelenesSzin = view.findViewById(R.id.dialog_spMegjelenesSzin);
+        //Illat
+        final Spinner spIllatIntenzitas = view.findViewById(R.id.dialog_spIllatIntenzitas);
+        final Spinner spIllatKarakter = view.findViewById(R.id.dialog_spIllatKarakter);
+        final Spinner spIllatMinoseg = view.findViewById(R.id.dialog_spIllatMinoseg);
+        //Zamat
+        final Spinner spZamatIntenzitas = view.findViewById(R.id.dialog_spZamatIntenzitas);
+        final Spinner spZamatKarakter = view.findViewById(R.id.dialog_spZamatKarakter);
+        final Spinner spZamatMinoseg = view.findViewById(R.id.dialog_spZamatMinoseg);
+        final Spinner spZamatHosszusag = view.findViewById(R.id.dialog_spZamatHosszusag);
+        //Összbenyomás
+        final Spinner spOsszBenyomas = view.findViewById(R.id.dialog_spOsszbenyomas);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                 .setTitle("Bírálat hozzáadása")
                 .setView(view)
@@ -74,13 +87,25 @@ public class BorbiralatFragment extends Fragment {
                         // check if user updating borkostoloSzemely
                         if (shouldUpdate && borbiralatList.get(position) != null) {
                             // update borkostoloSzemely by it's id
-                            updateBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())), Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())), position);
+                            updateBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()),
+                                    Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())),
+                                    Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spMegjelenesSzin.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spIllatIntenzitas.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spIllatKarakter.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spIllatMinoseg.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spZamatIntenzitas.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spZamatKarakter.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spZamatMinoseg.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spZamatHosszusag.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spOsszBenyomas.getSelectedItem())),
+                                    position);
                         } else {
                             // create new borkostoloSzemely
                             createBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())), Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())));
 
-                    }
-                    refreshList();
+                        }
+                        refreshList();
                         dialog.dismiss();
                     }
                 });
@@ -120,12 +145,29 @@ public class BorbiralatFragment extends Fragment {
      * Updating note in db and updating
      * item in the list by its position
      */
-    private void updateBorBiralat(int biraltBorId, int biraloSzemelyId, int megjelenesTisztasaga, int position) {
+    private void updateBorBiralat(int biraltBorId, int biraloSzemelyId, int megjelenesTisztasaga, int megjelenesSzin,
+                                  int illatIntenzitas, int illatKarakter, int illatMinoseg,
+                                  int zamatIntenzitas, int zamatKarakter, int zamatMinoseg, int zamatHosszusag,
+                                  int osszBenyomas,
+                                  int position) {
         Borbiralat t = borbiralatList.get(position);
         // updating note text
         t.setBiraltBorID(biraltBorId);
         t.setBiraloSzemelyID(biraloSzemelyId);
+
         t.setMegjelenesTisztasag(megjelenesTisztasaga);
+        t.setMegjelentesSzin(megjelenesSzin);
+
+        t.setIllatIntenzitas(illatIntenzitas);
+        t.setIllatKarakter(illatKarakter);
+        t.setIllatMinoseg(illatMinoseg);
+
+        t.setZamatIntenzitas(zamatIntenzitas);
+        t.setZamatKarakter(zamatKarakter);
+        t.setZamatMinoseg(zamatMinoseg);
+        t.setZamatHosszusag(zamatHosszusag);
+
+        t.setOsszbenyomas(osszBenyomas);
         // updating note in db
         databaseHelper.updateBorBiralat(t);
     }
@@ -172,7 +214,7 @@ public class BorbiralatFragment extends Fragment {
             }
         });
 
-        borBiralatAdapter = new BorBiralatAdapter(getContext(),borbiralatList);
+        borBiralatAdapter = new BorBiralatAdapter(getContext(), borbiralatList);
         recyclerViewBorBiralat.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewBorBiralat.setAdapter(borBiralatAdapter);
         recyclerViewBorBiralat.addOnItemTouchListener(new RecyclerTouchListener(getContext(),

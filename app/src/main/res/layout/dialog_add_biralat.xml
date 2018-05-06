@@ -7,7 +7,8 @@
     android:paddingRight="@dimen/activity_margin"
     android:paddingTop="@dimen/activity_margin">
 
-    <TextView android:id="@+id/dialog_title"
+    <TextView
+        android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_10"
@@ -39,16 +40,221 @@
         android:hint="Bíráló személy száma"
         android:inputType="textCapSentences|textMultiLine"
         android:lines="2"
-        android:visibility="visible"
         android:textColorHint="@color/hint_enter_note"
-        android:textSize="@dimen/input_new_note" />
+        android:textSize="@dimen/input_new_note"
+        android:visibility="visible" />
 
-    <Spinner
-        android:id="@+id/dialog_spMegjelenesTisztasag"
+    <!--Megjelenés szekció-->
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/megjelenesTisztasag"
-        android:prompt="@string/promt"
-        />
+        android:text="Megjelenés" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tisztaság" />
+
+        <Spinner
+            android:id="@+id/dialog_spMegjelenesTisztasag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/megjelenesTisztasag"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Szín" />
+
+        <Spinner
+            android:id="@+id/dialog_spMegjelenesSzin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/megjelenesSzin"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <!--Illat szekció-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Illat" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Intenzitás" />
+
+        <Spinner
+            android:id="@+id/dialog_spIllatIntenzitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/illatIntenzitas"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Karakter" />
+
+        <Spinner
+            android:id="@+id/dialog_spIllatKarakter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/illatKarakter"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minőség" />
+
+        <Spinner
+            android:id="@+id/dialog_spIllatMinoseg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/illatMinoseg"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <!--Zamat szekció-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Illat" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Intenzitás" />
+
+        <Spinner
+            android:id="@+id/dialog_spZamatIntenzitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/zamatIntenzitas"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Karakter" />
+
+        <Spinner
+            android:id="@+id/dialog_spZamatKarakter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/zamatKarakter"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minőség" />
+
+        <Spinner
+            android:id="@+id/dialog_spZamatMinoseg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/zamatMinoseg"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hosszúság" />
+
+        <Spinner
+            android:id="@+id/dialog_spZamatHosszusag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/zamatHosszusag"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Összbenyomás" />
+
+        <Spinner
+            android:id="@+id/dialog_spOsszbenyomas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/osszbenyomas"
+            android:prompt="@string/promt" />
+
+    </LinearLayout>
+
+    <!--Összbenyomás-->
 
 </LinearLayout>
