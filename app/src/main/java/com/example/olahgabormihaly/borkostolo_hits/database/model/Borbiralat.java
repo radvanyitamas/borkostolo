@@ -278,4 +278,5 @@ public class Borbiralat {
     public void setMegjegyzesZamatHosszusag(String megjegyzesZamatHosszusag) {
         this.megjegyzesZamatHosszusag = megjegyzesZamatHosszusag;
     }
+
 }

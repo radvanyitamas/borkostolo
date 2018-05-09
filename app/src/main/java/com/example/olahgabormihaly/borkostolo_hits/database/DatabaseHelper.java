@@ -184,6 +184,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 borbiralatok.setBiraltBorID(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_BiraltBorID)));
                 borbiralatok.setBiraloSzemelyID(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_BiraloSzemelyID)));
                 borbiralatok.setMegjelenesTisztasag(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_MegjelenesTisztasag)));
+                borbiralatok.setMegjelentesSzin(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_MegjelentesSzin)));
+                borbiralatok.setIllatIntenzitas(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_IllatIntenzitas)));
+                borbiralatok.setIllatKarakter(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_IllatKarakter)));
+                borbiralatok.setIllatMinoseg(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_IllatMinoseg)));
+                borbiralatok.setZamatIntenzitas(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_ZamatIntenzitas)));
+                borbiralatok.setZamatKarakter(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_ZamatKarakter)));
+                borbiralatok.setZamatMinoseg(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_ZamatMinoseg)));
+                borbiralatok.setZamatHosszusag(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_ZamatHosszusag)));
 
                 borbiralatList.add(borbiralatok);
             } while(cursor.moveToNext());
@@ -197,7 +205,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return borbiralatList;
     }
 
-    public long insertBorBiralat(int biraltBorId, int biraloSzemelyID, int megjelenesTisztasag) {
+    public long insertBorBiralat(int biraltBorId, int biraloSzemelyID, int megjelenesTisztasag,
+                                 int megjelenesSzin, int illatIntenzitas, int illatKarakter,
+                                 int illatMinoseg, int zamatIntezitas,int zamatKarakter,
+                                 int zamatMinoseg, int zamatHosszusag, int osszebenyomas) {
+
         // Get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -207,6 +219,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Borbiralat.COLUMN_BiraltBorID, biraltBorId);
         values.put(Borbiralat.COLUMN_BiraloSzemelyID, biraloSzemelyID);
         values.put(Borbiralat.COLUMN_MegjelenesTisztasag, megjelenesTisztasag);
+        values.put(Borbiralat.COLUMN_MegjelentesSzin, megjelenesSzin);
+        values.put(Borbiralat.COLUMN_IllatIntenzitas, illatIntenzitas);
+        values.put(Borbiralat.COLUMN_IllatKarakter, illatKarakter);
+        values.put(Borbiralat.COLUMN_IllatMinoseg, illatMinoseg);
+        values.put(Borbiralat.COLUMN_ZamatIntenzitas, zamatIntezitas);
+        values.put(Borbiralat.COLUMN_ZamatKarakter, zamatKarakter);
+        values.put(Borbiralat.COLUMN_ZamatMinoseg, zamatMinoseg);
+        values.put(Borbiralat.COLUMN_ZamatHosszusag, zamatHosszusag);
+        values.put(Borbiralat.COLUMN_Osszbenyomas, osszebenyomas);
 
         // Insert row
         long id = db.insert(Borbiralat.TABLE_NAME, null, values);
@@ -225,6 +246,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Borbiralat.COLUMN_BiraltBorID, borbiralat.getBiraltBorID());
         values.put(Borbiralat.COLUMN_BiraloSzemelyID, borbiralat.getBiraloSzemelyID());
         values.put(Borbiralat.COLUMN_MegjelenesTisztasag, borbiralat.getMegjelenesTisztasag());
+        values.put(Borbiralat.COLUMN_MegjelentesSzin, borbiralat.getMegjelentesSzin());
+        values.put(Borbiralat.COLUMN_IllatIntenzitas, borbiralat.getIllatIntenzitas());
+        values.put(Borbiralat.COLUMN_IllatKarakter, borbiralat.getIllatKarakter());
+        values.put(Borbiralat.COLUMN_IllatMinoseg, borbiralat.getIllatMinoseg());
+        values.put(Borbiralat.COLUMN_ZamatIntenzitas, borbiralat.getZamatIntenzitas());
+        values.put(Borbiralat.COLUMN_ZamatKarakter, borbiralat.getZamatKarakter());
+        values.put(Borbiralat.COLUMN_ZamatMinoseg, borbiralat.getZamatMinoseg());
+        values.put(Borbiralat.COLUMN_ZamatHosszusag, borbiralat.getZamatHosszusag());
+        values.put(Borbiralat.COLUMN_Osszbenyomas, borbiralat.getOsszbenyomas());
 
         // Updating row
         return  db.update(Borbiralat.TABLE_NAME, values, Borbiralat.COLUMN_ID + " =?",

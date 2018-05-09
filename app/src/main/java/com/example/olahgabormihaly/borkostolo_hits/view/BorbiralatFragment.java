@@ -102,7 +102,13 @@ public class BorbiralatFragment extends Fragment {
                                     position);
                         } else {
                             // create new borkostoloSzemely
-                            createBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()), Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())), Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())));
+                            createBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()),
+                                    Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())), Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spMegjelenesSzin.getSelectedItem())), Integer.parseInt(String.valueOf(spIllatIntenzitas.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spIllatKarakter.getSelectedItem())), Integer.parseInt(String.valueOf(spIllatMinoseg.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spZamatIntenzitas.getSelectedItem())), Integer.parseInt(String.valueOf(spZamatKarakter.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spZamatMinoseg.getSelectedItem())), Integer.parseInt(String.valueOf(spZamatKarakter.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spOsszBenyomas.getSelectedItem())));
 
                         }
                         refreshList();
@@ -135,10 +141,15 @@ public class BorbiralatFragment extends Fragment {
      * and refreshing the list
      */
 
-    private void createBorBiralat(int biraltBorId, int biraloSzemelyId, int megjelenesTisztasag) {
+    private void createBorBiralat(int biraltBorId, int biraloSzemelyId, int megjelenesTisztasag, int megjelenesSzin,
+                                  int illatIntenzitas, int illatKarakter, int illatMinoseg,
+                                  int zamatIntenzitas, int zamatKarakter, int zamatMinoseg, int zamatHosszusag,
+                                  int osszBenyomas) {
         // inserting note in db and getting
         // newly inserted note id
-        databaseHelper.insertBorBiralat(biraltBorId, biraloSzemelyId, megjelenesTisztasag);
+        databaseHelper.insertBorBiralat(biraltBorId, biraloSzemelyId, megjelenesTisztasag, megjelenesSzin,
+                illatIntenzitas, illatKarakter, illatMinoseg, zamatIntenzitas, zamatKarakter,
+                zamatMinoseg, zamatHosszusag, osszBenyomas);
     }
 
     /**
