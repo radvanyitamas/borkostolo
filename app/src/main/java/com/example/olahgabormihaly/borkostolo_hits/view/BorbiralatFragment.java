@@ -86,7 +86,6 @@ public class BorbiralatFragment extends Fragment {
 
                         // check if user updating borkostoloSzemely
                         if (shouldUpdate && borbiralatList.get(position) != null) {
-                            // update borkostoloSzemely by it's id
                             updateBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()),
                                     Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())),
                                     Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())),
@@ -101,13 +100,12 @@ public class BorbiralatFragment extends Fragment {
                                     Integer.parseInt(String.valueOf(spOsszBenyomas.getSelectedItem())),
                                     position);
                         } else {
-                            // create new borkostoloSzemely
                             createBorBiralat(Integer.parseInt(inputBiraltBorID.getText().toString()),
                                     Integer.parseInt(String.valueOf(inputBiraloID.getText().toString())), Integer.parseInt(String.valueOf(spMegjelenesTisztasag.getSelectedItem())),
                                     Integer.parseInt(String.valueOf(spMegjelenesSzin.getSelectedItem())), Integer.parseInt(String.valueOf(spIllatIntenzitas.getSelectedItem())),
                                     Integer.parseInt(String.valueOf(spIllatKarakter.getSelectedItem())), Integer.parseInt(String.valueOf(spIllatMinoseg.getSelectedItem())),
                                     Integer.parseInt(String.valueOf(spZamatIntenzitas.getSelectedItem())), Integer.parseInt(String.valueOf(spZamatKarakter.getSelectedItem())),
-                                    Integer.parseInt(String.valueOf(spZamatMinoseg.getSelectedItem())), Integer.parseInt(String.valueOf(spZamatKarakter.getSelectedItem())),
+                                    Integer.parseInt(String.valueOf(spZamatMinoseg.getSelectedItem())), Integer.parseInt(String.valueOf(spZamatHosszusag.getSelectedItem())),
                                     Integer.parseInt(String.valueOf(spOsszBenyomas.getSelectedItem())));
 
                         }

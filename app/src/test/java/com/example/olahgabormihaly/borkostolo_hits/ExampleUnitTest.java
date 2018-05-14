@@ -27,6 +27,10 @@ public class ExampleUnitTest {
             add((float) 1);
             add((float) 1);
             add((float) 1);
+            add((float) 1);
+            add((float) 2);
+            add((float) 2);
+            add((float) 2);
         }};
         List<Float> borok = new ArrayList<Float>() {{
             add((float) 60);

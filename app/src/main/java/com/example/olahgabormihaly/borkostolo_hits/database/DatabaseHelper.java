@@ -192,6 +192,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 borbiralatok.setZamatKarakter(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_ZamatKarakter)));
                 borbiralatok.setZamatMinoseg(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_ZamatMinoseg)));
                 borbiralatok.setZamatHosszusag(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_ZamatHosszusag)));
+                borbiralatok.setOsszbenyomas(cursor.getInt(cursor.getColumnIndex(Borbiralat.COLUMN_Osszbenyomas)));
 
                 borbiralatList.add(borbiralatok);
             } while(cursor.moveToNext());

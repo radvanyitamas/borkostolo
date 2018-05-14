@@ -116,6 +116,6 @@ public class HITSAlgorithm implements Callable<List<Float>> {
 
     private int getPontszam(long kostoloPosition, long borPosition) {
         // position -> adatbázisból kiszeded az összes kóstolót, és a listának az eleme
-        return (kostoloPosition % 2 == 0) ? 50 : (borPosition % 2 == 0) ? 40 : 55 ; //todo adatbázisból kiszedni az adott kóstoló adott borra adott összpontszámát (köztes tábla)
+        return (kostoloPosition % 2 == 0) ? 40 : (borPosition % 2 == 0) ? 50 : 40; //todo adatbázisból kiszedni az adott kóstoló adott borra adott összpontszámát (köztes tábla)
     }
 }
