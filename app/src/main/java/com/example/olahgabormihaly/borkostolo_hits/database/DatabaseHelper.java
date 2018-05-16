@@ -16,7 +16,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 1;
 
     // Database Name
     private static final String DATABASE_NAME = "COHITS";
@@ -34,13 +34,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(Bor.CREATE_TABLE);
         db.execSQL(Borbiralat.CREATE_TABLE);
 
-        long kostolo1 = insertKostolo("2345", "Üveges", "Kázmér", "", 0, db);
-        long kostolo2 = insertKostolo("3456", "Robusztus", "Károly", "", 0, db);
-        long kostolo3 = insertKostolo("1234", "Nagy", "Lajos", "", 0, db);
+        long kostolo1 = insertKostolo("234578MA", "Üveges", "Kázmér", "1990.05.15", 0, db);
+        long kostolo2 = insertKostolo("345634MB", "Kiss", "Alíz", "1987.09.22", 0, db);
+        long kostolo3 = insertKostolo("123456MA", "Oláh", "Gábor Mihály", "1993.02.04", 0, db);
 
-        long bor1 = insertBor("", "Kékfrankos", "", "", 2000, 12, 0, db);
-        long bor2 = insertBor("", "Gléda", "", "", 2000, 9, 0, db);
-        long bor3 = insertBor("", "Mulató$", "", "", 2000, 10, 0, db);
+        long bor1 = insertBor("Varga", "Töpszli", "édes", "vörös", 2016, 12, 14, db);
+        long bor2 = insertBor("Ostorosbor", "Irsai", "száraz", "fehér", 2014, 11, 12, db);
+        long bor3 = insertBor("Sol De España", "Sangria", "édes", "vörös", 2015, 7, 18, db);
 
         insertBorBiralat((int) bor1, (int) kostolo1, 86, db);
         insertBorBiralat((int) bor1, (int) kostolo2, 87, db);
