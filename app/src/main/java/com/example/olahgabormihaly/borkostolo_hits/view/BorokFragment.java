@@ -187,7 +187,7 @@ public class BorokFragment extends Fragment {
     private void createBor(String borGyarto, String borNeve, String borFajta, String borSzin, int borEvjarat, float borAlkholotartam, int borFogyasztasiHom) {
         // inserting note in db and getting
         // newly inserted note id
-        databaseHelper.insertBor(borGyarto, borNeve, borFajta, borSzin, borEvjarat, borAlkholotartam, borFogyasztasiHom, borAlkholotartam);
+        databaseHelper.insertBor(borGyarto, borNeve, borFajta, borSzin, borEvjarat, borAlkholotartam, borFogyasztasiHom);
     }
 
     /**

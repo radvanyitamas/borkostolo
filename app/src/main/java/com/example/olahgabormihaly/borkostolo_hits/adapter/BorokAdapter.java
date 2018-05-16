@@ -66,7 +66,6 @@ public class BorokAdapter extends RecyclerView.Adapter<BorokAdapter.MyViewHolder
         holder.tvEvjarat.setText(String.valueOf(bor.getBorEvjarat()));
         holder.tvAlkohol.setText("Alc. " +String.valueOf(bor.getBorAlkohol_tartam())  + "% Vol");
         holder.tvFogyasztasiHomerseklet.setText(String.valueOf(bor.getBorFogyasztasiHomerseklet()) + " C°");
-        holder.tvAtlagPontszam.setText(String.valueOf(bor.getBorAtlagPontszam()));
 
     }
 

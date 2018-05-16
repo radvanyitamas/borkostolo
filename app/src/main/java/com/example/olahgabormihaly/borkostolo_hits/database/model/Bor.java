@@ -11,7 +11,6 @@ public class Bor {
     public static final String COLUMN_EVJARAT = "BorEvjarat";
     public static final String COLUMN_ALKOHOLTARTAM = "BorAlkhoholTartam";
     public static final String COLUMN_FOGYASZTASIHOMERSEKLET = "BorFogyasztaiHomerseklet";
-    public static final String COLUMN_ATLAGPONTSZAM = " REAL";
 
     // Create table SQL query
     public static final String CREATE_TABLE =
@@ -23,12 +22,8 @@ public class Bor {
             + COLUMN_SZIN + " TEXT,"
             + COLUMN_EVJARAT + " INTEGER,"
             + COLUMN_ALKOHOLTARTAM + " REAL,"
-            + COLUMN_FOGYASZTASIHOMERSEKLET + " INTEGER,"
-            + COLUMN_ATLAGPONTSZAM + " REAL"
+            + COLUMN_FOGYASZTASIHOMERSEKLET + " INTEGER"
             + ")";
-
-
-
 
     private int ID;
     private String BorGyarto;
@@ -38,11 +33,10 @@ public class Bor {
     private int BorEvjarat;
     private float BorAlkohol_tartam;
     private int BorFogyasztasiHomerseklet;
-    private float BorAtlagPontszam;
 
     public Bor() {}
 
-    public Bor(int id, String gyarto, String neve, String fajta, String szin, int evjarat, float alkoholTartam, int fogyasztasiHomerseklet, float atlagPontSzam) {
+    public Bor(int id, String gyarto, String neve, String fajta, String szin, int evjarat, float alkoholTartam, int fogyasztasiHomerseklet) {
         this.ID = id;
         this.BorGyarto = gyarto;
         this.BorNeve = neve;
@@ -51,7 +45,6 @@ public class Bor {
         this.BorEvjarat = evjarat;
         this.BorAlkohol_tartam = alkoholTartam;
         this.BorFogyasztasiHomerseklet = fogyasztasiHomerseklet;
-        this.BorAtlagPontszam = atlagPontSzam;
     }
 
 
@@ -117,11 +110,5 @@ public class Bor {
 
     public void setBorFogyasztasiHomerseklet(int borFogyasztasiHomerseklet) {
         BorFogyasztasiHomerseklet = borFogyasztasiHomerseklet;
-    }
-
-    public float getBorAtlagPontszam() { return BorAtlagPontszam; }
-
-    public void setAtlagPontSzam(float borAtlagPontszam) {
-        BorAtlagPontszam = borAtlagPontszam;
     }
 }

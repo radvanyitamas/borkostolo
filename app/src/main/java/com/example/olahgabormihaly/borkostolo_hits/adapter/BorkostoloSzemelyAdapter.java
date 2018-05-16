@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.olahgabormihaly.borkostolo_hits.R;
 import com.example.olahgabormihaly.borkostolo_hits.database.model.BorkostoloSzemely;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -67,7 +68,7 @@ public class BorkostoloSzemelyAdapter extends RecyclerView.Adapter<BorkostoloSze
         holder.dot.setText(Html.fromHtml("&#8226;"));
 
         holder.szulDatum.setText(borkostoloSzemely.getSzuletesiDatum());
-        holder.szakmaisagErteke.setText(String.valueOf(borkostoloSzemely.getSzakmaisagiErtek()));
+        holder.szakmaisagErteke.setText(new DecimalFormat("#.####").format(borkostoloSzemely.getSzakmaisagiErtek()));
 
         // Formatting and displaying szulDatum
         holder.timestamp.setText(formatDate(borkostoloSzemely.getTimestamp()));

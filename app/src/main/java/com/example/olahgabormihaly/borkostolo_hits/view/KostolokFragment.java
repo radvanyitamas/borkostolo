@@ -18,12 +18,22 @@ import android.widget.Toast;
 
 import com.example.olahgabormihaly.borkostolo_hits.R;
 import com.example.olahgabormihaly.borkostolo_hits.adapter.BorkostoloSzemelyAdapter;
+import com.example.olahgabormihaly.borkostolo_hits.algorithm.HITSAlgorithm;
 import com.example.olahgabormihaly.borkostolo_hits.database.DatabaseHelper;
+import com.example.olahgabormihaly.borkostolo_hits.database.model.Bor;
+import com.example.olahgabormihaly.borkostolo_hits.database.model.Borbiralat;
 import com.example.olahgabormihaly.borkostolo_hits.database.model.BorkostoloSzemely;
 import com.example.olahgabormihaly.borkostolo_hits.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 
 public class KostolokFragment extends Fragment {
 
@@ -90,15 +100,64 @@ public class KostolokFragment extends Fragment {
 
     private void refreshList() {
         borkostoloSzemelyList.clear();
-        borkostoloSzemelyList.addAll(databaseHelper.getAllKostolo());
+        List<BorkostoloSzemely> allKostolo = databaseHelper.getAllKostolo();
+        rendezesHitsSzerint(allKostolo);
+        borkostoloSzemelyList.addAll(allKostolo);
 
-        if(borkostoloSzemelyList.size() == 0) {
+        if (borkostoloSzemelyList.size() == 0) {
             tvNoKostolok.setVisibility(View.VISIBLE);
         } else {
             tvNoKostolok.setVisibility(View.GONE);
         }
 
         borkostoloSzemelyAdapter.notifyDataSetChanged();
+    }
+
+    private void rendezesHitsSzerint(List<BorkostoloSzemely> allKostolo) {
+        List<Float> borAtlagPontszamok = new ArrayList<>();
+
+        List<Bor> allBor = databaseHelper.getAllBor();
+        Map<Integer, Float> borErtekek = new HashMap<>();
+
+        List<Borbiralat> allBorBiralat = databaseHelper.getAllBorBiralat();
+
+        for (Borbiralat borbiralat : allBorBiralat) {
+            int borId = borbiralat.getBiraltBorID();
+            if (borErtekek.containsKey(borId)) {
+                float ertek = borErtekek.get(borId);
+                ertek += borbiralat.getOsszesen();
+                borErtekek.put(borId, ertek);
+            } else {
+                borErtekek.put(borId, (float) borbiralat.getOsszesen());
+            }
+        }
+
+        Iterator<Integer> iterator = borErtekek.keySet().iterator();
+        while (iterator.hasNext()) {
+            Integer borId = iterator.next();
+            Float ertek = borErtekek.get(borId);
+            ertek /= allKostolo.size();
+            borAtlagPontszamok.add(ertek);
+        }
+
+        HITSAlgorithm hitsAlgorithm = new HITSAlgorithm(getContext(), allKostolo.size(), borAtlagPontszamok);
+        try {
+            List<Float> rangsor = Executors.newSingleThreadExecutor().submit(hitsAlgorithm).get();
+            for (int i = 0; i < rangsor.size(); i++) {
+                allKostolo.get(i).setSzakmaisagiErtek(rangsor.get(i));
+            }
+            Collections.sort(allKostolo, new Comparator<BorkostoloSzemely>() {
+                @Override
+                public int compare(BorkostoloSzemely o1, BorkostoloSzemely o2) {
+                    //10000-res szorzó: Lehet, hogy a pontszámok közt a különbség kisebb lesz, mint 1. Így ha int-té castoljuk, akkor elveszik a tizedes érték
+                    return (int) ((o2.getSzakmaisagiErtek() - o1.getSzakmaisagiErtek()) * 10000);
+                }
+            });
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showAddKostoloDialog(final boolean shouldUpdate, final int position) {

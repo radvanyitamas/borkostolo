@@ -1,6 +1,11 @@
 package com.example.olahgabormihaly.borkostolo_hits.algorithm;
 
 
+import android.content.Context;
+
+import com.example.olahgabormihaly.borkostolo_hits.database.DatabaseHelper;
+import com.example.olahgabormihaly.borkostolo_hits.database.model.Borbiralat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -11,6 +16,8 @@ public class HITSAlgorithm implements Callable<List<Float>> {
      * x -> kóstoló
      *
      * y -> bor
+     *
+     * kóstoló kezdőérték = 1
      *
      * bor kezdőérték = borra kapott pontok átlaga
      *
@@ -28,59 +35,70 @@ public class HITSAlgorithm implements Callable<List<Float>> {
      *
      * */
 
-    private List<Float> kostolok;
+    private static final int KOSTOLO_KEZDOERTEK = 1;
+
+    private Context context;
+    private int kostolokSzama;
     private List<Float> borok;
 
-    private float[][] Wx;
-
-    public HITSAlgorithm(List<Float> kostolok, List<Float> borok) {
-        this.kostolok = kostolok;
+    public HITSAlgorithm(Context context, int kostolokSzama, List<Float> borok) {
+        this.context = context;
+        this.kostolokSzama = kostolokSzama;
         this.borok = borok;
     }
 
     @Override
-    public List<Float> call() throws Exception {
-        Wx = new float[kostolok.size()][kostolok.size()];
-        float[] rangsor = new float[kostolok.size()];
+    public List<Float> call() {
+        float[][] wx = new float[kostolokSzama][kostolokSzama];
 
-        for (int i = 0; i < kostolok.size(); i++) {
-            for (int j = 0; j < kostolok.size(); j++) {
+        for (int i = 0; i < kostolokSzama; i++) {
+            for (int j = 0; j < kostolokSzama; j++) {
                 for (int k = 0; k < borok.size(); k++) {
-                    Wx[i][j] += getKostoloBorSuly(i, k) * getBorKostoloSuly(j, k);
+                    float kostoloBorSuly = getKostoloBorSuly(i, k);
+                    float borKostoloSuly = getBorKostoloSuly(j, k);
+                    wx[i][j] += kostoloBorSuly * borKostoloSuly;
                 }
             }
         }
 
-        //Mátrix szorzás (Wx*p), ahol p a kostolók vektora és mindegyik kezdőértéke 1
-        for (int i = 0; i < kostolok.size(); i++) {
-            rangsor[i] = 0;
-            for (int j = 0; j < kostolok.size(); j++) {
-                rangsor[i] += Wx[i][j];
-            }
+        //HITS-egyenletek megoldása
+        List<Float> rangsor = new ArrayList<>();
+        float szumma = 0;
+        for (int j = 0; j < kostolokSzama; j++) {
+            szumma += wx[j][0] * KOSTOLO_KEZDOERTEK;
         }
-
-        List<Float> list = new ArrayList<>();
-        for(int i = 0; i < kostolok.size(); i++) {
-            list.add(rangsor[i]);
+        rangsor.add(szumma);
+        szumma = 0;
+        for (int j = 0; j < kostolokSzama; j++) {
+            szumma += wx[j][1] * KOSTOLO_KEZDOERTEK;
         }
-        return list;
+        rangsor.add(szumma);
+        szumma = 0;
+        for (int j = 0; j < kostolokSzama; j++) {
+            szumma += wx[j][2] * KOSTOLO_KEZDOERTEK;
+        }
+        rangsor.add(szumma);
+        return rangsor;
     }
 
     //w(xi yj)vissza
     // Bortól a kostoló felé mutató él normalizált értéke
-    private float getBorKostoloSuly(long kostoloPosition, long borPosition) {
-        float suly = 0;
+    private float getBorKostoloSuly(int kostoloPosition, int borPosition) {
 
-        suly = Math.abs(getD(borPosition) - Math.abs(getBorAtlagPontszam(borPosition) - getPontszam(kostoloPosition, borPosition))) / (kostolok.size() - 1) * getD(borPosition);
+        // | D - | qj0 - w(xi yj) oda vessző | |
+        float szamlalo = Math.abs(getD(borPosition) - Math.abs(getBorAtlagPontszam(borPosition) - getPontszam(kostoloPosition, borPosition)));
 
-        return suly;
+        // (L-1)*D
+        float nevezo = (kostolokSzama - 1) * getD(borPosition);
+
+        return szamlalo / nevezo;
     }
 
-    //D
-    private float getD(long borPosition) {
-        float osszeg = 0;
+    //D = szumma i | qj0 - w(xi yj)vessző oda |
+    private float getD(int borPosition) {
 
-        for (int i = 0; i < kostolok.size(); i++) {
+        float osszeg = 0;
+        for (int i = 0; i < kostolokSzama; i++) {
             osszeg += Math.abs(getBorAtlagPontszam(borPosition) - getPontszam(i, borPosition));
         }
 
@@ -88,34 +106,33 @@ public class HITSAlgorithm implements Callable<List<Float>> {
     }
 
     //w(xi yj)oda
-    private float getKostoloBorSuly(long kostoloPosition, long borPosition) {
-        float suly = 0;
+    private float getKostoloBorSuly(int kostoloPosition, int borPosition) {
 
         float osszeg = 0;
-
         for (int i = 0; i < borok.size(); i++) {
-            Float bor = borok.get(i);
-
             osszeg += getPontszam(kostoloPosition, i);
         }
 
-        suly = getPontszam(kostoloPosition, borPosition) / osszeg;
-
-        return suly;
+        return getPontszam(kostoloPosition, borPosition) / osszeg;
     }
 
     private float getBorAtlagPontszam(long borPosition) {
-        float pontszam = 0;
-
-        for (int i = 0; i < kostolok.size(); i++) {
-            pontszam += getPontszam(i, borPosition);
-        }
-
-        return pontszam / kostolok.size();
+        return borok.get((int) borPosition);
     }
 
-    private int getPontszam(long kostoloPosition, long borPosition) {
-        // position -> adatbázisból kiszeded az összes kóstolót, és a listának az eleme
-        return (kostoloPosition % 2 == 0) ? 40 : (borPosition % 2 == 0) ? 50 : 40; //todo adatbázisból kiszedni az adott kóstoló adott borra adott összpontszámát (köztes tábla)
+    private float getPontszam(int kostoloPosition, int borPosition) {
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+
+        List<Borbiralat> allBorBiralat = databaseHelper.getAllBorBiralat();
+
+        //A lista indexelése 0-tól és az adatbázisban 1-től
+        //Listában pozíciót és ID-t azért hasonlíthatunk össze, mert az adatbázisból ID szerint növekvő sorrendben olvassuk ki az adatokat
+        for (Borbiralat borbiralat : allBorBiralat) {
+            if (borbiralat.getBiraloSzemelyID() - 1 == kostoloPosition && borbiralat.getBiraltBorID() - 1 == borPosition) {
+                return borbiralat.getOsszesen();
+            }
+        }
+        return 0;
     }
 }
